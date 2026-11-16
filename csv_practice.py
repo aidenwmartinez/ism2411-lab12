@@ -59,3 +59,41 @@ with open("data/sales.csv", "r", newline="", encoding="utf-8") as sales_file:
                 rows_written += 1
 
 print(f"Wrote {rows_written} of {rows_read} sales rows to data/cleaned.csv.")
+
+# Exercise 6: Read each sale using the column names.
+# Use csv.reader when the columns are in a known order and a list is enough.
+# Use csv.DictReader when column names make the code easier to read.
+print("\nExercise 6")
+dict_total_revenue = 0
+
+with open("data/sales.csv", "r", newline="", encoding="utf-8") as sales_file:
+    reader = csv.DictReader(sales_file)
+
+    for row in reader:
+        product = row["product"]
+        price = float(row["price"])
+        quantity = int(row["quantity"])
+        revenue = price * quantity
+        dict_total_revenue += revenue
+
+        print(f"{product}: {quantity} units × ${price:.2f} = ${revenue:.2f}")
+
+print(f"Total revenue: ${dict_total_revenue:.2f}")
+
+# Exercise 7: Add up revenue for each product.
+print("\nExercise 7")
+sales_summary = {}
+
+with open("data/sales.csv", "r", newline="", encoding="utf-8") as sales_file:
+    reader = csv.DictReader(sales_file)
+
+    for row in reader:
+        product = row["product"]
+        price = float(row["price"])
+        quantity = int(row["quantity"])
+        revenue = price * quantity
+        sales_summary[product] = sales_summary.get(product, 0) + revenue
+
+for product in sorted(sales_summary):
+    print(f"{product}: ${sales_summary[product]:.2f}")
+
