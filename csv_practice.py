@@ -1,4 +1,5 @@
 import csv
+from datetime import datetime
 
 # Exercise 2: Print every row in the sales CSV.
 with open("data/sales.csv", "r", newline="", encoding="utf-8") as sales_file:
@@ -97,3 +98,8 @@ with open("data/sales.csv", "r", newline="", encoding="utf-8") as sales_file:
 for product in sorted(sales_summary):
     print(f"{product}: ${sales_summary[product]:.2f}")
 
+# Exercise 8: Append the date, time, and total revenue for this run.
+timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+with open("data/run_log.txt", "a", encoding="utf-8") as log_file:
+    log_file.write(f"{timestamp} | Total revenue: ${total_revenue:.2f}\n")
